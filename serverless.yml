@@ -1,0 +1,62 @@
+service: lckd-password-generator
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  profile: ${env:PROFILE}
+  region: eu-north-1
+  iam:
+    role: ${env:LAMBDA_ROLE}
+  deploymentMethod: direct
+  environment:
+    TABLE_NAME: passwords
+
+useDotenv: true
+plugins: 
+  - serverless-webpack
+package:
+  individually: true
+custom:
+  webpack:
+    webpackConfig: 'webpack.config.cjs'
+
+functions:
+  getPassword:
+    handler: src/functions/getPassword.handler
+    events:
+      - httpApi: 'GET /api/password'
+  savePassword:
+    handler: src/functions/savePassword.handler
+    events:
+      - httpApi: 'POST /api/password'
+  updatePassword:
+    handler: src/functions/updatePassword.handler
+    events:
+      - httpApi: 'PUT /api/password'
+  deletePassword:
+    handler: src/functions/deletePassword.handler
+    events:
+      - httpApi: 'DELETE /api/password'
+  generatePassword:
+    handler: src/functions/generatePassword.handler
+    events:
+      - httpApi: 'GET /api/password/generate'
+
+resources:
+  Resources:
+    LckdDatabase:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.TABLE_NAME}
+        AttributeDefinitions:
+          - AttributeName: PK
+            AttributeType: S
+          - AttributeName: SK
+            AttributeType: S
+        KeySchema:
+          - AttributeName: PK
+            KeyType: HASH
+          - AttributeName: SK
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST

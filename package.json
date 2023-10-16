@@ -1,0 +1,17 @@
+{
+  "name": "lckd-password-generator",
+  "version": "1.0.0",
+  "description": "Password generator",
+  "type": "module",
+  "scripts": {
+    "deploy": "sls deploy"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "serverless-webpack": "^5.13.0"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.1473.0"
+  }
+}
