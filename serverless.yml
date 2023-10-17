@@ -11,9 +11,10 @@ provider:
   deploymentMethod: direct
   environment:
     TABLE_NAME: passwords
+    SECRET_KEY: ${env:SECRET_KEY}
 
 useDotenv: true
-plugins: 
+plugins:
   - serverless-webpack
 package:
   individually: true
@@ -22,6 +23,14 @@ custom:
     webpackConfig: 'webpack.config.cjs'
 
 functions:
+  register:
+    handler: src/functions/register.handler
+    events:
+      - httpApi: 'POST /api/register'
+  login:
+    handler: src/functions/login.handler
+    events:
+      - httpApi: 'POST /api/login'
   getPassword:
     handler: src/functions/getPassword.handler
     events:
