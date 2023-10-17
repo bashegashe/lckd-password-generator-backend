@@ -1,7 +1,6 @@
 import { db } from '@/services/db';
 import { sendError, sendResponse } from '@/responses';
 import { validateAuth } from '@/middleware/validation';
-import CryptoJS from 'crypto-js';
 import { middyfy } from '@/services/middify';
 import { encryptPassword } from '@/models/user';
 

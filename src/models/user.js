@@ -1,6 +1,6 @@
 import { db } from '@/services/db';
 import CryptoJS from 'crypto-js';
-
+import jwt from 'jsonwebtoken';
 export function checkPassword(password, encryptedPassword) {
   const bytes = CryptoJS.AES.decrypt(encryptedPassword, process.env.SECRET_KEY);
   const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
@@ -21,4 +21,16 @@ export async function getUser(username) {
     .promise();
 
   return Item;
+}
+
+export function generateToken(username) {
+  return jwt.sign({ username }, process.env.SECRET_KEY, {
+    expiresIn: '1h',
+    algorithm: 'HS256',
+  });
+}
+export function verifyToken(token) {
+  return jwt.verify(token, process.env.SECRET_KEY, {
+    algorithm: 'HS256',
+  });
 }
