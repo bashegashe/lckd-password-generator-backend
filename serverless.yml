@@ -34,7 +34,7 @@ functions:
   getPassword:
     handler: src/functions/getPassword.handler
     events:
-      - httpApi: 'GET /api/password'
+      - httpApi: 'GET /api/password/{domain}'
   savePassword:
     handler: src/functions/savePassword.handler
     events:
@@ -46,11 +46,15 @@ functions:
   deletePassword:
     handler: src/functions/deletePassword.handler
     events:
-      - httpApi: 'DELETE /api/password'
+      - httpApi: 'DELETE /api/password/{domain}'
   generatePassword:
     handler: src/functions/generatePassword.handler
     events:
       - httpApi: 'GET /api/password/generate'
+  getDomains:
+    handler: src/functions/getDomains.handler
+    events:
+      - httpApi: 'GET /api/password/domains'
 
 resources:
   Resources:

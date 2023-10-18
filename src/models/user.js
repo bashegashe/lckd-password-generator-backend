@@ -1,14 +1,19 @@
 import { db } from '@/services/db';
 import CryptoJS from 'crypto-js';
 import jwt from 'jsonwebtoken';
+
+export function encryptPassword(password) {
+  return CryptoJS.AES.encrypt(password, process.env.SECRET_KEY || 'a1b1c1').toString();
+}
+export function decryptPassword(encryptedPassword) {
+  const bytes = CryptoJS.AES.decrypt(encryptedPassword, process.env.SECRET_KEY || 'a1b1c1');
+  return bytes.toString(CryptoJS.enc.Utf8);
+}
 export function checkPassword(password, encryptedPassword) {
-  const bytes = CryptoJS.AES.decrypt(encryptedPassword, process.env.SECRET_KEY);
-  const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
+  const originalPassword = decryptPassword(encryptedPassword)
   return password === originalPassword;
 }
-export function encryptPassword(password) {
-  return CryptoJS.AES.encrypt(password, process.env.SECRET_KEY).toString();
-}
+
 export async function getUser(username) {
   const { Item } = await db
     .get({

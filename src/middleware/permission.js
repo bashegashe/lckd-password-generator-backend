@@ -15,7 +15,7 @@ const checkPermission = {
         return sendError(400, 'Token is invalid');
       }
 
-      req.event.user = user.username;
+      req.event.user = user.PK;
       return req.response;
     } catch (error) {
       return sendError(401, error.message);

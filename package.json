@@ -12,6 +12,7 @@
     "@middy/core": "^4.6.5",
     "@middy/http-json-body-parser": "^4.6.5",
     "crypto-js": "^4.1.1",
+    "generate-password": "^1.7.0",
     "jsonwebtoken": "^9.0.2",
     "serverless-webpack": "^5.13.0"
   },
