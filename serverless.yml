@@ -31,10 +31,10 @@ functions:
     handler: src/functions/login.handler
     events:
       - httpApi: 'POST /api/login'
-  getPassword:
-    handler: src/functions/getPassword.handler
+  getPasswords:
+    handler: src/functions/getPasswords.handler
     events:
-      - httpApi: 'GET /api/password/{domain}'
+      - httpApi: 'GET /api/password'
   savePassword:
     handler: src/functions/savePassword.handler
     events:
@@ -51,10 +51,6 @@ functions:
     handler: src/functions/generatePassword.handler
     events:
       - httpApi: 'GET /api/password/generate'
-  getDomains:
-    handler: src/functions/getDomains.handler
-    events:
-      - httpApi: 'GET /api/password/domains'
 
 resources:
   Resources:
