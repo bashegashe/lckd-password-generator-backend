@@ -5,10 +5,10 @@ import { checkPermission } from "@/middleware/permission";
 import { encryptPassword } from "@/models/user";
 
 export const updatePassword = async (event) => {
-  const { domain, newPassword } = event.body;
+  const { domain, username, newPassword } = event.body;
 
-  if (!domain || !newPassword) {
-    return sendResponse(400, { error: 'Missing domain or new password' })
+  if (!domain || !username || !newPassword) {
+    return sendResponse(400, { error: 'Missing domain, username or new password' })
   }
 
   const params = {
@@ -16,6 +16,7 @@ export const updatePassword = async (event) => {
     Item: {
       PK: event.user,
       SK: domain,
+      username,
       password: encryptPassword(newPassword),
     },
     ConditionExpression: 'attribute_exists(PK) AND attribute_exists(SK)'
