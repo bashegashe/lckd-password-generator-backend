@@ -18,7 +18,7 @@ const getPasswords = async (event) => {
 
     const domains = Items
       .filter(item => item.SK !== event.user)
-      .map(item => ({ domain: item.SK, password: decryptPassword(item.password) }));
+      .map(item => ({ domain: item.SK, username: item.username, password: decryptPassword(item.password) }));
 
     return sendResponse(200, { success: true, domains });
   } catch (error) {

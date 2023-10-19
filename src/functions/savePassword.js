@@ -5,10 +5,10 @@ import { checkPermission } from "@/middleware/permission";
 import { encryptPassword } from "@/models/user";
 
 export const savePassword = async (event) => {
-  const { domain, password } = event.body;
+  const { domain, username, password } = event.body;
 
-  if (!domain || !password) {
-    return sendResponse(400, { error: 'Missing domain or password' })
+  if (!domain || !username || !password) {
+    return sendResponse(400, { error: 'Missing domain, username or password' })
   }
 
   const params = {
@@ -16,6 +16,7 @@ export const savePassword = async (event) => {
     Item: {
       PK: event.user,
       SK: domain,
+      username,
       password: encryptPassword(password),
     },
     ConditionExpression: 'attribute_not_exists(PK) AND attribute_not_exists(SK)'
